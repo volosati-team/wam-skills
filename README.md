@@ -75,7 +75,8 @@ wam-skills/
 │
 ├── telegram/
 │   ├── stickers-emoji.md            # Generate and upload sticker/emoji packs via agent
-│   └── userbot-setup.md             # Telethon userbot: setup, signing rules, queue pattern, limit risks
+│   ├── userbot-setup.md             # Telethon userbot: setup, signing rules, queue pattern, limit risks
+│   └── rich-messages.md             # sendRichMessage wire format: text, media/attach schema, typing-animation draft
 │
 ├── agent-behavior/
 │   ├── language-formatting.md       # Language discipline + code block and link rules
@@ -127,7 +128,10 @@ gate checked inside the job script itself.
 **telegram** — Sticker and emoji pack generation. Userbot setup via Telethon: first
 auth, queue pattern, signing rules (always identify as agent), no-send-without-permission
 policy, internal use cases (wake agents, broadcast notifications), and limit risks —
-how an uncontrolled agent loop can drain FloodWait budget fast.
+how an uncontrolled agent loop can drain FloodWait budget fast. Rich messages:
+the undocumented `sendRichMessage` media/attach wire format (`tg://photo?id=` embed
++ multipart `attach://` resolution) and the `sendRichMessageDraft` typing-animation
+preview, reverse-engineered and confirmed against the live Bot API 10.1.
 
 **agent-behavior** — Language discipline: prompts and docs in English, replies in
 user's language, user-visible notes and memory in user's language (no context drift
