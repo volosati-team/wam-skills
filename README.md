@@ -70,7 +70,8 @@ wam-skills/
 │   └── topic-override-pattern.md    # How topic overrides work in WAM agents
 │
 ├── scheduling/
-│   └── lisa-cron-quickstart.md      # lisa-cron TOML reference + common patterns
+│   ├── lisa-cron-quickstart.md      # lisa-cron TOML reference + common patterns
+│   └── reversible-pause-gate.md     # Pause a cron job via marker file (no enabled field exists)
 │
 ├── telegram/
 │   ├── stickers-emoji.md            # Generate and upload sticker/emoji packs via agent
@@ -82,7 +83,8 @@ wam-skills/
 │
 └── wam-platform/
     ├── platform-notes.md            # Storage tiers, supervisor, known limits (dated, recheck on updates)
-    └── connect-to-service.md        # "I want to connect to X" — decision tree, exhaust options, issue+support fallback
+    ├── connect-to-service.md        # "I want to connect to X" — decision tree, exhaust options, issue+support fallback
+    └── image-generation.md          # generate_image (aspect_ratio, permission fix), Stable Horde free-tier, vision tools
 ```
 
 ---
@@ -118,7 +120,9 @@ token setup.
 Override files are intentionally lean; this guide explains why and how to structure them.
 
 **scheduling** — lisa-cron TOML quick reference. Common patterns: every 5 min, hourly,
-daily at a fixed local time. Timezone field, timeout_secs, job anatomy.
+daily at a fixed local time. Timezone field, timeout_secs, job anatomy. Also: how to
+pause a job temporarily without an `enabled` field (it doesn't exist) — marker-file
+gate checked inside the job script itself.
 
 **telegram** — Sticker and emoji pack generation. Userbot setup via Telethon: first
 auth, queue pattern, signing rules (always identify as agent), no-send-without-permission
@@ -134,7 +138,9 @@ link formatting rules for Telegram and Markdown.
 supervisor manages vs topic_loader daemons, known platform limits with dates (set_model
 bug, CronCreate session-only, etc.), post-wipe recovery. Also: "I want to connect to X"
 — decision tree to exhaust all options before declaring impossible, and how to file an
-issue + /support fallback when genuinely blocked.
+issue + /support fallback when genuinely blocked. Also: image generation and vision —
+`generate_image` (aspect_ratio param, a recent permission-list fix), free-tier Stable
+Horde as the default generator, and the vision tools per provider tier.
 
 ---
 
