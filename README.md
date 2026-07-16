@@ -66,6 +66,13 @@ wam-skills/
 ├── github/
 │   └── agent-github-guide.md        # Read files, search repos, create issues/PRs via API
 │
+├── knowledge/
+│   ├── rag_search.py                 # Semantic search CLI over projects/**/*.md
+│   ├── rag_index.py                  # Build/update the sqlite-vec index (incremental + --rebuild)
+│   ├── rag_stats.py                  # Index size, file count, last-indexed timestamp
+│   └── skills/
+│       └── knowledge-search.md       # Installable Claude Code skill for the RAG search above
+│
 ├── chat-management/
 │   └── topic-override-pattern.md    # How topic overrides work in WAM agents
 │
@@ -120,6 +127,13 @@ require login — click, fill forms, save auth cookies.
 **github** — Decision tree for reading files, exploring repos, creating issues and PRs,
 merging, and pushing — all without a browser. Python `urllib` patterns, `gh` CLI caveats,
 token setup.
+
+**knowledge** — Semantic search (RAG) over your own accumulated `.md` notes, so you can
+ask "what do I know about X" instead of grepping for exact strings. `rag_search.py`
+queries a local sqlite-vec index; `rag_index.py` builds/updates it (incremental by
+default, `--rebuild` for a full pass); `rag_stats.py` reports index health. Ships with
+an installable `.claude/skills/knowledge-search.md` so an agent reaches for it before
+falling back to plain text search.
 
 **chat-management** — How `topics.json`, `topic_loader`, and `override.md` interact.
 Override files are intentionally lean; this guide explains why and how to structure them.
