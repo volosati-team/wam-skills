@@ -10,10 +10,14 @@ Config lives in a TOML file. Jobs are standard cron expressions plus a few extra
 ## Config file location
 
 ```
-~/workspace/lisa-cron/jobs.toml
+~/workspace/lisa-cron/lisa-cron.toml
 ```
 
 The daemon watches this file and reloads automatically on change. No restart needed.
+
+> **Correction (2026-07-15):** an earlier version of this guide named the file
+> `jobs.toml` — the actual file is `lisa-cron.toml`. Verified against the live
+> config at `lisa-cron/lisa-cron.toml`.
 
 ---
 
@@ -26,10 +30,16 @@ schedule    = "*/5 * * * *"     # cron expression (or @reboot, @hourly, etc.)
 command     = "python3 /home/superlisa/workspace/scripts/my_script.py"
 timezone    = "Europe/Moscow"   # optional; defaults to UTC if omitted
 timeout_secs = 60               # kill job if it runs longer than this
-enabled     = true              # set false to disable without deleting
 ```
 
 All fields except `name`, `schedule`, and `command` are optional.
+
+> **Correction (2026-07-15):** there is no `enabled` field on the `Job` config
+> (checked against `lisa-cron/src/config.rs` — the struct has no such field,
+> and serde does not reject unknown fields, so an `enabled = false` line would
+> silently do nothing rather than error). To pause a job temporarily without
+> deleting its schedule, see
+> [`reversible-pause-gate.md`](reversible-pause-gate.md) in this same folder.
 
 ---
 
@@ -129,13 +139,12 @@ name         = "session-watchdog-ensure"
 schedule     = "@reboot"
 command      = "python3 /home/superlisa/workspace/scripts/session_watchdog.py --ensure"
 timeout_secs = 10
-
-[[jobs]]
-name         = "daily-disabled"
-schedule     = "0 12 * * *"
-command      = "python3 /home/superlisa/workspace/scripts/disabled_task.py"
-enabled      = false
 ```
+
+To pause a job like `daily-disabled` above without an `enabled` field, use the
+marker-file pattern in
+[`reversible-pause-gate.md`](reversible-pause-gate.md) instead of editing this
+TOML.
 
 ---
 
@@ -153,7 +162,7 @@ tail -f /home/superlisa/workspace/lisa-cron/logs/vpn-sub-update.log
 
 ## Adding a job from your agent
 
-The agent can edit `lisa-cron/jobs.toml` directly (Level A — auto, no confirmation
+The agent can edit `lisa-cron/lisa-cron.toml` directly (Level A — auto, no confirmation
 needed for internal file edits). After writing the file, changes take effect within
 one polling cycle (typically a few seconds).
 
