@@ -76,11 +76,15 @@ wam-skills/
 ├── telegram/
 │   ├── stickers-emoji.md            # Generate and upload sticker/emoji packs via agent
 │   ├── userbot-setup.md             # Telethon userbot: setup, signing rules, queue pattern, limit risks
-│   └── rich-messages.md             # sendRichMessage wire format: text, media/attach schema, typing-animation draft
+│   ├── rich-messages.md             # sendRichMessage wire format: text, media/attach schema, typing-animation draft
+│   ├── telegram_rich_bridge.py      # Working CLI bridge for sendRichMessage/Draft — curl straight into scripts/
+│   └── skills/
+│       └── rich-text.md             # Installable Claude Code skill for the bridge above
 │
 ├── agent-behavior/
 │   ├── language-formatting.md       # Language discipline + code block and link rules
-│   └── bash-pitfalls.md             # Heredoc quoting, send-to-self trap, other silent failures
+│   ├── bash-pitfalls.md             # Heredoc quoting, send-to-self trap, other silent failures
+│   └── claude-skills.md             # .claude/skills/ mechanism explained + how to install skills from this repo
 │
 └── wam-platform/
     ├── platform-notes.md            # Storage tiers, supervisor, known limits (dated, recheck on updates)
@@ -131,12 +135,17 @@ policy, internal use cases (wake agents, broadcast notifications), and limit ris
 how an uncontrolled agent loop can drain FloodWait budget fast. Rich messages:
 the undocumented `sendRichMessage` media/attach wire format (`tg://photo?id=` embed
 + multipart `attach://` resolution) and the `sendRichMessageDraft` typing-animation
-preview, reverse-engineered and confirmed against the live Bot API 10.1.
+preview, reverse-engineered and confirmed against the live Bot API 10.1 — plus a
+working `telegram_rich_bridge.py` CLI you can curl straight into `scripts/`, and an
+installable `.claude/skills/rich-text.md` skill so an agent reaches for it unprompted.
 
 **agent-behavior** — Language discipline: prompts and docs in English, replies in
 user's language, user-visible notes and memory in user's language (no context drift
 from translation), reasoning in the most token-efficient language. Code block and
-link formatting rules for Telegram and Markdown.
+link formatting rules for Telegram and Markdown. Claude Code skills: how
+`.claude/skills/*.md` differs from this repo (auto-loaded runtime mechanism vs.
+on-demand doc pull), skill file anatomy, and how to install a shareable skill from
+this repo into your own container.
 
 **wam-platform** — Storage tiers (workspace vs tmp vs ~/.local vs vault), what the
 supervisor manages vs topic_loader daemons, known platform limits with dates (set_model
