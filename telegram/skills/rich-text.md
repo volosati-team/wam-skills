@@ -1,6 +1,9 @@
 ---
 name: rich-text
 description: Send Telegram rich messages (Bot API 10.1 sendRichMessage) — formatted markdown/HTML with embedded photos and a typing-animation preview. Trigger when the task needs one message containing several inline photos (not separate file sends), a combined text+image block, or a "typing/thinking" effect before the final reply. Not for plain single-photo sends (use the platform's normal send-photo tool) or plain text (use the normal reply tool) — this is specifically for composite rich messages via the raw Bot API.
+metadata:
+  author: volosati-team
+  tags: [telegram, rich-messages, media]
 ---
 
 # Rich text (sendRichMessage bridge)
