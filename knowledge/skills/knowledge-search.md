@@ -1,6 +1,9 @@
 ---
 name: knowledge-search
 description: Semantic search over your own accumulated notes and project docs (RAG over projects/**/*.md). Trigger when the user asks "what do I know about X", "did I write about Y before", "find in my notes/projects about Z", or when you need context from previously saved reviews, ideas, or teardowns before starting new work. Use this BEFORE grep when the question is conceptual/topical rather than an exact-text lookup.
+metadata:
+  author: volosati-team
+  tags: [search, rag, knowledge-base, notes]
 ---
 
 # Knowledge search (RAG)
